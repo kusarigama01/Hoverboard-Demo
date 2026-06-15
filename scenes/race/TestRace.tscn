@@ -1,0 +1,66 @@
+[gd_scene format=3 uid="uid://bicdo63m84pit"]
+
+[ext_resource type="Texture2D" uid="uid://ostisj0byasl" path="res://icon.svg" id="1_1lnb8"]
+[ext_resource type="Script" uid="uid://baejnf88mkbey" path="res://scripts/player/PlayerController.gd" id="2_ipsri"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ipsri"]
+albedo_texture = ExtResource("1_1lnb8")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_lbgvx"]
+material = SubResource("StandardMaterial3D_ipsri")
+size = Vector2(100, 100)
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_1lnb8"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lbgvx"]
+radius = 0.3
+height = 1.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_lbgvx"]
+size = Vector3(0.26, 0.065, 0.92)
+
+[node name="TestRace" type="Node3D" unique_id=970186679]
+
+[node name="Ground" type="StaticBody3D" parent="." unique_id=1095109822]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground" unique_id=118827119]
+mesh = SubResource("PlaneMesh_lbgvx")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground" unique_id=1076774079]
+shape = SubResource("WorldBoundaryShape3D_1lnb8")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=746620306]
+transform = Transform3D(1, 0, 0, 0, 0.70710677, 0.70710677, 0, -0.70710677, 0.70710677, 0, 10, 0)
+shadow_enabled = true
+
+[node name="PlayerController" type="CharacterBody3D" parent="." unique_id=1988589507 node_paths=PackedStringArray("hover_fl", "hover_fr", "hover_rl", "hover_rr", "camera")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+script = ExtResource("2_ipsri")
+hover_fl = NodePath("HoverFL")
+hover_fr = NodePath("HoverFR")
+hover_rl = NodePath("HoverRL")
+hover_rr = NodePath("HoverRR")
+camera = NodePath("Camera")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerController" unique_id=1012378553]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.94367987, 0)
+shape = SubResource("CapsuleShape3D_lbgvx")
+
+[node name="HoverFL" type="RayCast3D" parent="PlayerController" unique_id=1363089947]
+target_position = Vector3(-0.13, -0.5, 0.35)
+
+[node name="HoverFR" type="RayCast3D" parent="PlayerController" unique_id=1714973786]
+target_position = Vector3(0.13, -0.5, 0.35)
+
+[node name="HoverRL" type="RayCast3D" parent="PlayerController" unique_id=576099998]
+target_position = Vector3(-0.13, -0.5, -0.35)
+
+[node name="HoverRR" type="RayCast3D" parent="PlayerController" unique_id=395960492]
+target_position = Vector3(0.13, -0.5, -0.35)
+
+[node name="BoardMesh" type="MeshInstance3D" parent="PlayerController" unique_id=1883529245]
+mesh = SubResource("BoxMesh_lbgvx")
+
+[node name="Camera" type="Camera3D" parent="PlayerController" unique_id=1224868214]
+transform = Transform3D(1, 0, 0, 0, 0.9659258, 0.25881904, 0, -0.25881904, 0.9659258, 0, 1.5, 2.5)
+current = true
